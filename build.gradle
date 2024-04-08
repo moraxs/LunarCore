@@ -67,7 +67,7 @@ protobuf {
 }
 
 dependencies {
-    implementation fileTree(dir: 'lib', include: ['*.jar'])
+        implementation fileTree(dir: 'lib', include: ['*.jar'])
 
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.9'
     implementation group: 'ch.qos.logback', name: 'logback-core', version: '1.4.14'
@@ -92,6 +92,9 @@ dependencies {
 
     implementation group: 'org.jline', name: 'jline', version: '3.24.1'
     implementation group: 'org.jline', name: 'jline-terminal-jansi', version: '3.24.1'
+
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.0'
+    implementation group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.15.0'
 
     protobuf files('proto/')
 
