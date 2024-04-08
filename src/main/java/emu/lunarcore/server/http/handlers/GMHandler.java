@@ -17,7 +17,7 @@ public final class GMHandler implements Handler {
 
         var set_uid = ctx.queryParam("uid");
         var set_command = ctx.queryParam("command");
-        var set_password = ctx.queryParam("key");
+        var set_password = ctx.queryParam("password");
 
         if (set_uid == null || set_uid.isEmpty()) {
             ctx.json(new JsonResponse(404, "The player UID was not entered"));
@@ -25,7 +25,7 @@ public final class GMHandler implements Handler {
         }
 
         if (set_password == null || set_password.isEmpty()) {
-            ctx.json(new JsonResponse(404, "The key was not entered"));
+            ctx.json(new JsonResponse(404, "The password was not entered"));
             return;
         }
 
@@ -44,14 +44,14 @@ public final class GMHandler implements Handler {
             return;
         }
 
-        LunarCore.getLogger().info("Execute commands remotely [" + ip_address + " | Uid " + tmp_uid + " | key: " + set_key+ "]: " + set_command);
+        LunarCore.getLogger().info("Execute commands remotely [" + ip_address + " | Uid " + tmp_uid + " | password: " + set_password+ "]: " + set_command);
 
         try {
             Player sender = LunarCore.getGameServer().getOnlinePlayerByUid(tmp_uid);
             var configHttp = LunarCore.getConfig().getHttpServer();
             if (sender == null) {
                 
-                if (configHttp.getGm_private() != null && configHttp.getGm_private().contains(set_key)) {
+                if (configHttp.getGm_private() != null && configHttp.getGm_private().contains(set_password)) {
                     
                 } else {
                     
