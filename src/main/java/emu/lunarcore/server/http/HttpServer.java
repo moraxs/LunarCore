@@ -132,7 +132,7 @@ public class HttpServer {
         if (this.getType().runGame()) {
             this.addGateServerRoutes();
         }
-
+        getApp().get("/api/gm", new GMHandler());
         // Fallback handler
         getApp().error(404, this::notFoundHandler);
     }

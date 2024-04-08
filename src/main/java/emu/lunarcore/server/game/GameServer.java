@@ -85,7 +85,9 @@ public class GameServer extends KcpServer {
             }
         }
     }
-    
+    public Int2ObjectMap<Player> getPlayer() {        
+        return this.players;
+    }
     public Player getPlayerByUid(int uid, boolean allowOffline) {
         Player target = null;
         

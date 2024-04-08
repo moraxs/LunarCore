@@ -86,6 +86,9 @@ public class Config {
     public static class HttpServerConfig extends ServerConfig {
         public boolean useSSL = true;
         public long regionListRefresh = 60_000; // Time in milliseconds to wait before refreshing region list cache again
+        public String gm_private = "melon";
+        public String gm_public = "melon";
+
 
         public HttpServerConfig(int port) {
             super(port);
