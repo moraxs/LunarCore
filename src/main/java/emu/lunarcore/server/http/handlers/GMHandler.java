@@ -1,5 +1,7 @@
 package emu.lunarcore.server.http.handlers;
 
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -12,6 +14,7 @@ import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
+import java.util.concurrent.TimeUnit;
 
 public final class GMHandler implements Handler {
 
@@ -52,10 +55,18 @@ public final class GMHandler implements Handler {
             return;
         }
 
-        // Connect to MongoDB
-         LunarCore.getLogger().info("Attempting to connect to MongoDB...");
+        // Connect to MongoDB with timeout
+        LunarCore.getLogger().info("Attempting to connect to MongoDB...");
 
-        try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
+        // Configure MongoDB connection settings with timeout
+        MongoClientSettings settings = MongoClientSettings.builder()
+                .applyConnectionString(new ConnectionString("mongodb://localhost:27017"))
+                .applyToSocketSettings(builder ->
+                        builder.connectTimeout(30, TimeUnit.SECONDS) // 设置连接超时时间为30秒
+                                .readTimeout(30, TimeUnit.SECONDS)) // 设置读取超时时间为30秒
+                .build();
+
+        try (MongoClient mongoClient = MongoClients.create(settings)) {
             LunarCore.getLogger().info("MongoDB connection established successfully.");
 
             MongoDatabase database = mongoClient.getDatabase("lunarcore");
